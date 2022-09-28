@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: phpmyadmin
-          image: phpmyadmin/phpmyadmin
+          image: gcr.io/social-363908/phpmyadmin_modified:latest
           ports:
             - containerPort: 80
           env:
@@ -34,12 +34,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: phpmyadmin-service
+  name: phpmyadmin-service-internal
 spec:
-  type: LoadBalancer
   selector:
     app: phpmyadmin
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+  -  port: 80
