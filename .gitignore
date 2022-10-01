@@ -2,3 +2,4 @@
 Microservices/database-service/k8s/mysql-secret.yaml
 .DS_Store
 .idea
+Microservices/auth-service/.env
