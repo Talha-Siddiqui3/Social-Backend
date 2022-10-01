@@ -5,13 +5,15 @@ import { LoginResponseDto } from './dto/login.response.dto';
 import { VerifyRequestDto } from './dto/verify.request.dto';
 import { VerifyResponseDto } from './dto/verify.response.dto';
 import { BaseResponseDto } from './dto/base.response.dto';
-import { UsersService } from './user/user.service';
+import { UserService } from './user/user.service';
+import { AuthService } from './auth/auth.service';
 
 @Injectable()
 export class AppService {
   constructor(
     private readonly otpService: OtpService,
-    private readonly userService: UsersService,
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
   ) {}
 
   async login(request: LoginRequestDto): Promise<LoginResponseDto> {
@@ -29,10 +31,16 @@ export class AppService {
     let accessToken = null;
     if (success) {
       const user = await this.userService.findUser(request.phoneNumber);
-      accessToken = user?.id ? user?.access_token : null;
 
+      if (user) {
+        accessToken = user?.id ? user?.access_token : null;
+      } else {
+        const user = await this.userService.createUser(request.phoneNumber);
+        accessToken = this.authService.signUser(user.id, user.phone_number);
+        user.access_token = accessToken;
+        await this.userService.updateUser(user);
+      }
     }
-
     const error = success === false ? 'Invalid Otp' : null;
     return {
       accessToken: accessToken,

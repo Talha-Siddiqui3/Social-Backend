@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from '../entity/user.entity';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
@@ -18,5 +18,9 @@ export class UsersService {
 
   findUser(phoneNumber: string): Promise<User> {
     return this.usersRepository.findOneBy({ phone_number: phoneNumber });
+  }
+
+  updateUser(user:User) {
+    return this.usersRepository.update({id:user.id}, user)
   }
 }
