@@ -1,4 +1,4 @@
-import { Module, CacheModule } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OtpService } from './otp/otp.service';
@@ -8,9 +8,11 @@ import { ConfigModule } from '@nestjs/config';
 import appConfiguration from './config/app.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as redisStore from 'cache-manager-redis-store';
-import {User} from "./entity/user.entity";
-import { UserModule } from './user/user.module';
+import { User } from './entity/user.entity';
+import { UserService } from './user/user.service';
 import { AuthService } from './auth/auth.service';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -42,8 +44,9 @@ import { AuthService } from './auth/auth.service';
       synchronize: true,
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, OtpService, SmsService, AuthService],
+  providers: [AppService, OtpService, SmsService],
 })
 export class AppModule {}

@@ -43,6 +43,11 @@ spec:
               secretKeyRef:
                 name: mysql-secret
                 key: mysql-root-password
+          - name: AUTH_JWT_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: auth-secret
+                key: auth-jwt-secret-key
           ports:
             - containerPort: 3000
 
