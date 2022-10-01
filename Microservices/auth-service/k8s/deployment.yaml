@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-deployment
+  labels:
+    app: auth-service-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service-pod
+  template:
+    metadata:
+      labels:
+        app: auth-service-pod
+    spec:
+      containers:
+        - name: auth-service-pod
+          image: gcr.io/social-363908/auth-service:latest
+          env:
+          - name: TWILIO_ACCOUNT_SID
+            valueFrom:
+              secretKeyRef:
+                name: auth-secret
+                key: twilio-account-sid
+          - name: TWILIO_AUTH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: auth-secret
+                key:  twilio-auth-token
+          - name: TWILIO_PHONE_NUMBER
+            valueFrom:
+              secretKeyRef:
+                name: auth-secret
+                key: twilio-phone-number
+          - name: REDIS_AUTH_PASS
+            valueFrom:
+              secretKeyRef:
+                name: auth-secret
+                key: redis-auth-pass
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-root-password
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service-internal
+spec:
+  selector:
+    app: auth-service-pod
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
