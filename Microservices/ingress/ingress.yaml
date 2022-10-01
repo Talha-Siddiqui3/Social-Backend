@@ -7,19 +7,13 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: "ingress-webapps"
 spec:
   rules:
-  - http:
+  - host: "social-phpmyadmin.roveapps.com"
+    http:
       paths:
-      - path: "/"
+      - path: "/*"
         pathType: ImplementationSpecific
         backend:
           service:
-            name: nginx-service
+            name: test
             port:
-              number: 80
-      - path: "/phpmyadmin/*"
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: phpmyadmin-service-internal
-            port:
-              number: 80              
+              number: 80                          
