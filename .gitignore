@@ -4,3 +4,4 @@ Microservices/database-service/k8s/mysql-secret.yaml
 Microservices/auth-service/.env
 .env
 Microservices/redis-cache/k8s/redis-config.yaml
+Microservices/auth-service/k8s/auth-secret.yaml
