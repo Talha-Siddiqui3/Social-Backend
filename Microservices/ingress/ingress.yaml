@@ -7,13 +7,13 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: "ingress-webapps"
 spec:
   rules:
-  - host: "social-auth.roveapps.com"
+  - host: "social-app.roveapps.com"
     http:
       paths:
       - path: "/*"
         pathType: ImplementationSpecific
         backend:
           service:
-            name: auth-service-internal
+            name: api-gateway-service
             port:
               number: 80                          

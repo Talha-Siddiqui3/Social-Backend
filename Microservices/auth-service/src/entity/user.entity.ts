@@ -1,25 +1,25 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'User' })
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column()
+  @Column({ default: null })
   name: string;
 
-  @Column()
+  @Column({ default: null })
   profile_picture: string;
 
-  @Column()
+  @Column({ default: null })
   bio: string;
 
-  @Column()
-  isActive: boolean;
+  @Column({ default: null })
+  is_active: boolean;
 
-  @Column()
+  @Column({ default: null })
   phone_number: string;
 
-  @Column()
+  @Column({ default: null })
   access_token: string;
 }

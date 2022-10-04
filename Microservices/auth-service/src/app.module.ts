@@ -41,7 +41,7 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.MYSQL_ROOT_PASSWORD,
       database: 'main',
       entities: [User],
-      synchronize: true,
+      synchronize: false,
     }),
     UserModule,
     AuthModule,
