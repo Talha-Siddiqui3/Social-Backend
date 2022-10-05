@@ -19,7 +19,7 @@ export class OtpService {
   ) {}
 
   private static generateCode(): string {
-    const otpCode = crypto_secure_random_digit.randomDigits(6).join('');
+    const otpCode = crypto_secure_random_digit.randomDigits(4).join('');
     return otpCode;
   }
 
