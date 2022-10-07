@@ -7,6 +7,7 @@ import { VerifyResponseDto } from './dto/verify-response.dto';
 import { BaseResponseDto } from './dto/base-response.dto';
 import { UserService } from './user/user.service';
 import { AuthService } from './auth/auth.service';
+import { UserResponseDto } from './user/dto/user-response.dto';
 
 @Injectable()
 export class AppService {
@@ -29,20 +30,23 @@ export class AppService {
     );
     console.log('success', success);
     let accessToken = null;
+    let user: UserResponseDto;
     if (success) {
-      const user = await this.userService.findUser(request.phoneNumber);
+      user = await this.userService.getUserByPhoneNumber(request.phoneNumber);
 
       if (user) {
-        accessToken = user?.id ? user?.access_token : null;
+        accessToken = user?.id ? user?.accessToken : null;
       } else {
-        const user = await this.userService.createUser(request.phoneNumber);
-        accessToken = this.authService.signUser(user.id, user.phone_number);
-        user.access_token = accessToken;
-        await this.userService.updateUser(user);
+        accessToken = this.authService.signUser(request.phoneNumber);
+        user = await this.userService.createUser(
+          request.phoneNumber,
+          accessToken,
+        );
       }
     }
     const error = success === false ? 'Invalid Otp' : null;
     return {
+      userData: user,
       accessToken: accessToken,
       success: success,
       error: error,

@@ -1,26 +1,22 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from '../entity/user.entity';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
+import { UserResponseDto } from './dto/user-response.dto';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
-  ) {}
+  constructor(@Inject('USER_SERVICE') private client: ClientProxy) {}
 
-  createUser(phoneNumber: string) {
-    const user = new User();
-    user.phone_number = phoneNumber;
-    return this.usersRepository.save(user);
+  createUser(
+    phoneNumber: string,
+    accessToken: string,
+  ): Promise<UserResponseDto> {
+    return this.client
+      .send('createUser', { phoneNumber, accessToken })
+      .toPromise();
   }
 
-  findUser(phoneNumber: string): Promise<User> {
-    return this.usersRepository.findOneBy({ phone_number: phoneNumber });
-  }
-
-  updateUser(user:User) {
-    return this.usersRepository.update({id:user.id}, user)
+  getUserByPhoneNumber(phoneNumber: string): Promise<UserResponseDto> {
+    return this.client.send('getUserByPhoneNumber', phoneNumber).toPromise();
   }
 }

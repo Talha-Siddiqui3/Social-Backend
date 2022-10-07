@@ -9,8 +9,8 @@ import appConfiguration from './config/app.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as redisStore from 'cache-manager-redis-store';
 import { User } from './entity/user.entity';
-import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -41,8 +41,8 @@ import { AuthModule } from './auth/auth.module';
       entities: [User],
       synchronize: false,
     }),
-    UserModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService, OtpService, SmsService],
