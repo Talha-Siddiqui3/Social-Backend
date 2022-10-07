@@ -1,30 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { ClientProxyFactory, Transport } from '@nestjs/microservices';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-
-export enum Microservices {
-  AUTH_MICROSERVICE = 'AUTH_MICROSERVICE',
-}
+import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot()
-  ],
+  imports: [ConfigModule.forRoot(), UserModule, AuthModule],
   controllers: [AppController],
-  providers: [
-    {
-      provide: 'AUTH_SERVICE',
-      useFactory: (configService: ConfigService) =>
-          ClientProxyFactory.create({
-            transport: Transport.TCP,
-            options: {
-              host: 'auth-service-internal.default.svc.cluster.local',
-              //host: 'localhost',
-              port: 4000,
-            },
-          }),
-    },
-  ],
+  providers: [],
 })
 export class AppModule {}

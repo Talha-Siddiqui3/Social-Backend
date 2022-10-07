@@ -9,8 +9,6 @@ import appConfiguration from './config/app.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as redisStore from 'cache-manager-redis-store';
 import { User } from './entity/user.entity';
-import { UserService } from './user/user.service';
-import { AuthService } from './auth/auth.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 

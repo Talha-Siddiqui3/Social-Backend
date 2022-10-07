@@ -1,4 +1,4 @@
-import {BaseResponseDto} from "./base.response.dto";
+import {BaseResponseDto} from "../../dto/base.response.dto";
 
 export class LoginResponseDto extends BaseResponseDto {
   error?: string;

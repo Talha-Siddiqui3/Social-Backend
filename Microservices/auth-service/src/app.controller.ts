@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller } from '@nestjs/common';
 import { AppService } from './app.service';
-import { LoginResponseDto } from './dto/login.response.dto';
-import { LoginRequestDto } from './dto/login.request.dto';
-import { VerifyRequestDto } from './dto/verify.request.dto';
-import { VerifyResponseDto } from './dto/verify.response.dto';
+import { LoginResponseDto } from './dto/login-response.dto';
+import { LoginRequestDto } from './dto/login-request.dto';
+import { VerifyRequestDto } from './dto/verify-request.dto';
+import { VerifyResponseDto } from './dto/verify-response.dto';
 import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
@@ -18,7 +18,7 @@ export class AppController {
   @MessagePattern({ cmd: 'login' })
   async login(@Body() data: LoginRequestDto): Promise<LoginResponseDto> {
     await this.appService.login(data);
-    return { statusCode: 200, success: true, error: null };
+    return { success: true, error: null };
   }
 
   @MessagePattern({ cmd: 'verify' })

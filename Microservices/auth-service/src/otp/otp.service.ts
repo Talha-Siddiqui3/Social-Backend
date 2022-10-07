@@ -1,7 +1,7 @@
 //importing Get, Inject, Inject, and CACHE_MANAGER from nestjs/common
 import { Injectable } from '@nestjs/common';
 import { SmsService } from '../sms/sms.service';
-import { VerifyResponseDto } from '../dto/verify.response.dto';
+import { VerifyResponseDto } from '../dto/verify-response.dto';
 
 const crypto_secure_random_digit = require('crypto-secure-random-digit');
 
