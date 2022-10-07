@@ -34,10 +34,11 @@ export class AppService {
     if (success) {
       user = await this.userService.getUserByPhoneNumber(request.phoneNumber);
 
-      if (user) {
+      if (user.success === true) {
         accessToken = user?.id ? user?.accessToken : null;
       } else {
         accessToken = this.authService.signUser(request.phoneNumber);
+        console.log('creating user: ', request.phoneNumber);
         user = await this.userService.createUser(
           request.phoneNumber,
           accessToken,

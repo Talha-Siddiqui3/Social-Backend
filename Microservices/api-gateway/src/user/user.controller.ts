@@ -20,8 +20,9 @@ export class UserController {
   constructor(@Inject('USER_SERVICE') private client: ClientProxy) {}
 
   @Get()
-  getUser(@Query('id') id: string): Observable<UserResponseDto> {
-    return this.client.send('getUser', id);
+  async getUser(@Query('id') id: string): Promise<UserResponseDto> {
+    const userResponseDto:UserResponseDto = await this.client.send<UserResponseDto>('getUser', id).toPromise();
+    return userResponseDto
   }
 
   @Put()
