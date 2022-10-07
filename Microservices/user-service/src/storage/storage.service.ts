@@ -28,19 +28,31 @@ export class StorageService {
     media: Buffer,
   ): Promise<string> {
     const file = this.storage.bucket(this.bucket).file(path);
-
+   
     return new Promise((resolve, reject) => {
-      const stream = file.createWriteStream();
-      stream.on('finish', async () => {
-        const publicUrl = `https://storage.googleapis.com/${this.bucket}/${file.name}`;
-        await file.makePublic();
-        resolve(publicUrl);
+      file.save(Buffer.from(media), async (err) => {
+        if (!err) {
+          console.log('cool');
+          const publicUrl = `https://storage.googleapis.com/${this.bucket}/${file.name}`;
+          await file.makePublic();
+          resolve(publicUrl);
+        } else {
+          console.log('error ' + err);
+          reject(err);
+        }
       });
-
-      stream.on('error', (err) => {
-        reject(err);
-      });
-      stream.end(media.buffer);
     });
+    //   const stream = file.createWriteStream();
+    //   stream.on('finish', async () => {
+    //     const publicUrl = `https://storage.googleapis.com/${this.bucket}/${file.name}`;
+    //     await file.makePublic();
+    //     resolve(publicUrl);
+    //   });
+    //
+    //   stream.on('error', (err) => {
+    //     reject(err);
+    //   });
+    //   stream.end(media.buffer);
+    // });
   }
 }

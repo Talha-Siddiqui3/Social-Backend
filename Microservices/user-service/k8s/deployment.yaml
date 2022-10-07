@@ -28,21 +28,6 @@ spec:
                 secretKeyRef:
                   name: auth-secret
                   key: auth-jwt-secret-key
-            - name: PROJECT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: storage-secret
-                  key: project_id
-            - name: PRIVATE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: storage-secret
-                  key: private_key
-            - name: CLIENT_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: storage-secret
-                  key: client_email
             - name: STORAGE_MEDIA_BUCKET
               value: social-app-data
           ports:
