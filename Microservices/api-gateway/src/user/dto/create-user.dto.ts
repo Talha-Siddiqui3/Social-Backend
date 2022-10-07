@@ -1,6 +1,7 @@
 
 export class CreateUserDto {
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   profilePicture?: string;
   bio?: string;
   isActive?: boolean;

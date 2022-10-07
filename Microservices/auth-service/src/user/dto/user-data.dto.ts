@@ -1,6 +1,7 @@
 export class UserDataDto {
   id: string;
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   profilePicture?: string;
   bio?: string;
   isActive?: boolean;

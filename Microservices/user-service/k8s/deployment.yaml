@@ -18,18 +18,42 @@ spec:
         - name: user-service-pod
           image: gcr.io/social-363908/user-service:latest
           env:
-          - name: MYSQL_ROOT_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mysql-secret
-                key: mysql-root-password
-          - name: AUTH_JWT_SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: auth-secret
-                key: auth-jwt-secret-key
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-root-password
+            - name: AUTH_JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secret
+                  key: auth-jwt-secret-key
+            - name: PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secret
+                  key: project_id
+            - name: PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secret
+                  key: private_key
+            - name: CLIENT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: storage-secret
+                  key: client_email
+            - name: STORAGE_MEDIA_BUCKET
+              value: social-app-data
           ports:
             - containerPort: 3000
+          volumeMounts:
+          - name: google-cloud-key
+            mountPath: /var/secrets/google
+      volumes:
+        - name: google-cloud-key
+          secret:
+            secretName: service-account-credentials
 
 ---
 apiVersion: v1

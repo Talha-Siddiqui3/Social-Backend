@@ -6,3 +6,4 @@ Microservices/auth-service/.env
 Microservices/redis-cache/k8s/redis-config.yaml
 Microservices/auth-service/k8s/auth-secret.yaml
 test-local-service
+Microservices/user-service/k8s/storage-secret.yaml

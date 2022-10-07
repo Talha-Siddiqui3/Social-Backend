@@ -2,7 +2,8 @@ import { BaseResponseDto } from '../../dto/base-response.dto';
 
 export class UserResponseDto extends BaseResponseDto {
   id: string;
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   profilePicture?: string;
   bio?: string;
   isActive?: boolean;
