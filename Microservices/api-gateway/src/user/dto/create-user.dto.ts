@@ -1,9 +1,9 @@
 
 export class CreateUserDto {
   name?: string;
-  profile_picture?: string;
+  profilePicture?: string;
   bio?: string;
-  is_active?: boolean;
-  phone_number: string;
-  access_token: string;
+  isActive?: boolean;
+  phoneNumber: string;
+  accessToken: string;
 }

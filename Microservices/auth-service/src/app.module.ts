@@ -6,9 +6,7 @@ import { TwilioModule } from 'nestjs-twilio';
 import { SmsService } from './sms/sms.service';
 import { ConfigModule } from '@nestjs/config';
 import appConfiguration from './config/app.config';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import * as redisStore from 'cache-manager-redis-store';
-import { User } from './entity/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 
@@ -30,16 +28,6 @@ import { UserModule } from './user/user.module';
       //port: 55000,
       auth_pass: process.env.REDIS_AUTH_PASS,
       //auth_pass: 'redispw',
-    }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'database-service-internal.default.svc.cluster.local',
-      port: 3306,
-      username: 'root',
-      password: process.env.MYSQL_ROOT_PASSWORD,
-      database: 'main',
-      entities: [User],
-      synchronize: false,
     }),
     AuthModule,
     UserModule,
