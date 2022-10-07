@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+  labels:
+    app: user-service-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service-pod
+  template:
+    metadata:
+      labels:
+        app: user-service-pod
+    spec:
+      containers:
+        - name: user-service-pod
+          image: gcr.io/social-363908/user-service:latest
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-root-password
+          - name: AUTH_JWT_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: auth-secret
+                key: auth-jwt-secret-key
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service-internal
+spec:
+  selector:
+    app: user-service-pod
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000

@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { UserController } from './user.controller';
+import {NestjsFormDataModule} from "nestjs-form-data";
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot(), NestjsFormDataModule],
   controllers: [UserController],
   providers: [
     {
