@@ -16,4 +16,14 @@ spec:
           service:
             name: api-gateway-service
             port:
-              number: 80                          
+              number: 80
+  - host: "social-chat.roveapps.com"
+    http:
+      paths:
+        - path: "/*"
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: chat-internal-service
+              port:
+                number: 3000
