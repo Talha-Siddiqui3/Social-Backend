@@ -24,6 +24,6 @@ spec:
           pathType: ImplementationSpecific
           backend:
             service:
-              name: chat-internal-service
+              name: chat-service-internal
               port:
                 number: 3000

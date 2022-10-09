@@ -2,8 +2,8 @@ import {Injectable} from '@nestjs/common';
 import {UserContactsRequestDto} from './dto/user-contacts-request.dto';
 import {UserContactsResponseDto} from './dto/user-contacts-response.dto';
 import {InjectRepository} from '@nestjs/typeorm';
-import {User} from '../../entities/user.entity';
 import {Repository, In} from 'typeorm';
+import {User} from "../entities/user.entity";
 
 @Injectable()
 export class ConversationService {

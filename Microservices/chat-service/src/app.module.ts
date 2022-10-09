@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { ConversationService } from './conversation/conversation.service';
 import { ConversationController } from './conversation/conversation.controller';
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {User} from "../entities/user.entity";
-import {Conversation} from "../entities/conversation.entity";
+import {Conversation} from "./entities/conversation.entity";
+import {User} from "./entities/user.entity";
 
 @Module({
   imports: [
