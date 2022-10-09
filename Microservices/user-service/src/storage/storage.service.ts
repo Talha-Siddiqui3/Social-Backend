@@ -28,7 +28,7 @@ export class StorageService {
     media: Buffer,
   ): Promise<string> {
     const file = this.storage.bucket(this.bucket).file(path);
-   
+
     return new Promise((resolve, reject) => {
       file.save(Buffer.from(media), async (err) => {
         if (!err) {

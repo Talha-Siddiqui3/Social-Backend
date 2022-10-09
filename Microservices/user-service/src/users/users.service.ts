@@ -45,13 +45,16 @@ export class UsersService {
 
   async update(updateUserDto: UpdateUserDto): Promise<BaseResponseDto> {
     console.log('updateUserDto', updateUserDto);
-    const fileName = updateUserDto.profilePictureFile.originalName;
-    const fileExtension = fileName.substring(0, fileName.lastIndexOf('.') + 1);
-    const profilePictureLink = await this.storageService.uploadFile(
-      'profile-pictures/' + uuidv4() + fileExtension,
-      updateUserDto.profilePictureFile.mimetype,
-      updateUserDto.profilePictureFile.buffer,
-    );
+    let profilePictureLink;
+    if (updateUserDto.profilePictureFile) {
+      const fileName = updateUserDto.profilePictureFile.originalName;
+      const fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+      profilePictureLink = await this.storageService.uploadFile(
+        'profile-pictures/' + uuidv4() + fileExtension,
+        updateUserDto.profilePictureFile.mimetype,
+        updateUserDto.profilePictureFile.buffer,
+      );
+    }
     const updateUserObj = {
       firstName: updateUserDto.firstName,
       lastName: updateUserDto.lastName,
