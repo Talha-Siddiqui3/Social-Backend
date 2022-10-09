@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database-service-internal:3306
--- Generation Time: Oct 01, 2022 at 04:06 AM
+-- Generation Time: Oct 09, 2022 at 06:50 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.0.19
 
@@ -28,10 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Conversation` (
-  `id` int NOT NULL,
-  `last_message` int NOT NULL,
-  `last_message_sender_id` int NOT NULL,
-  `name` varchar(100) NOT NULL
+  `id` varchar(50) NOT NULL,
+  `last_message` longtext,
+  `last_message_sender_id` varchar(50) DEFAULT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `last_message_sent_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -41,11 +42,11 @@ CREATE TABLE `Conversation` (
 --
 
 CREATE TABLE `Message` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `id` varchar(50) NOT NULL,
+  `user_id` varchar(50) DEFAULT NULL,
   `message` longtext,
-  `created_at` datetime NOT NULL,
-  `conversation_id` int NOT NULL
+  `created_at` datetime DEFAULT NULL,
+  `conversation_id` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -55,14 +56,23 @@ CREATE TABLE `Message` (
 --
 
 CREATE TABLE `User` (
-  `id` int NOT NULL,
-  `name` varchar(45) NOT NULL,
+  `id` varchar(50) NOT NULL,
+  `first_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `profile_picture` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `bio` varchar(200) DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `phone_number` varchar(18) NOT NULL,
-  `access_token` varchar(256) NOT NULL
+  `is_active` tinyint(1) DEFAULT NULL,
+  `phone_number` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `access_token` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `last_name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `User`
+--
+
+INSERT INTO `User` (`id`, `first_name`, `profile_picture`, `bio`, `is_active`, `phone_number`, `access_token`, `last_name`) VALUES
+('b0553a25-51eb-46cd-ad21-2547aebaa151', 'talha', 'https://storage.googleapis.com/social-app-data/profile-pictures/87d45c52-1af6-46f5-ad2d-b4a11bca4982cc37e459-e5ac-4339-b825-1de46a9ec66d', NULL, NULL, '+14039788236', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZU51bWJlciI6IisxNDAzOTc4ODIzNiIsImlhdCI6MTY2NTE1MzE5OSwiZXhwIjoxNjk2NzEwMTUxfQ.jNqQ0SYnPDe7hgD06LQdiMCGrV0tpExxV3xhkBpmDe0', 'siddiqui'),
+('b0553a25-51eb-46cd-ad21-2547aebaa691', 'Sam', 'https://storage.googleapis.com/social-app-data/profile-pictures/87d45c52-1af6-46f5-ad2d-b4a11bca4982cc37e459-e5ac-4339-b825-1de46a9ec66d', NULL, NULL, '+1123456789', '', 'Harris');
 
 -- --------------------------------------------------------
 
@@ -71,10 +81,10 @@ CREATE TABLE `User` (
 --
 
 CREATE TABLE `UserConversation` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `conversation_id` int NOT NULL,
-  `last_message_seen` tinyint(1) NOT NULL
+  `id` varchar(50) NOT NULL,
+  `user_id` varchar(50) DEFAULT NULL,
+  `conversation_id` varchar(50) DEFAULT NULL,
+  `last_message_seen` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
