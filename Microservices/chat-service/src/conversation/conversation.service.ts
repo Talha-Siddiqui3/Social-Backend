@@ -8,7 +8,7 @@ import { Connection } from 'mysql2/promise';
 import { getUserConversationsQuery } from './sql.queries/queries';
 import { UserConversationDbModel } from './models/user-conversation-db.model';
 import { UserConversationModel } from './models/user-conversation.model';
-import {UserConversationsResponseDto} from "./dto/user-conversations-response.dto";
+import { UserConversationsResponseDto } from './dto/user-conversations-response.dto';
 
 @Injectable()
 export class ConversationService {
@@ -40,7 +40,9 @@ export class ConversationService {
     };
   }
 
-  async getUserConversations(userID: string) : Promise<UserConversationsResponseDto> {
+  async getUserConversations(
+    userID: string,
+  ): Promise<UserConversationsResponseDto> {
     // @ts-ignore
     const userConversations: UserConversationDbModel[] =
       await this.connection.query<UserConversationDbModel[]>(
@@ -54,20 +56,17 @@ export class ConversationService {
         userConversations,
       );
 
-    const userConversationsModels: UserConversationModel[] = [];
-    Object.values(userConversationIDToUserConversationMap).forEach(
+    const userConversationsModels = Object.values(userConversationIDToUserConversationMap).map(
       (userConversationDbModels) => {
-        userConversationsModels.push(
-          new UserConversationModel(userConversationDbModels),
-        );
+        return new UserConversationModel(userConversationDbModels)
       },
     );
 
-    return {success:true,  conversations: userConversationsModels};
+    return { success: true, conversations: userConversationsModels };
   }
 
   listToMap<T>(key: string, list: T[]): { string: T[] } | {} {
-    const map: { [key:string]: T[] } = {};
+    const map: { [key: string]: T[] } = {};
 
     list.forEach((item: T) => {
       if (!map[key]) {
