@@ -13,4 +13,11 @@ export class Conversation {
 
   @Column({ default: null, name: 'name' })
   name: string;
+
+  @Column({ default: null, name: 'image' })
+  image: Date;
+
+  @Column({ default: null, name: 'last_message_send_date' })
+  lastMessageSendDate: Date;
+
 }

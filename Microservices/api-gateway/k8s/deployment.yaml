@@ -19,6 +19,9 @@ spec:
           image: gcr.io/social-363908/api-gateway-service:latest
           ports:
             - containerPort: 3000
+          env:
+            - name: CHAT_SERVICE_HOST
+              value: chat-service-internal.default.svc.cluster.local
 
 ---
 apiVersion: v1
