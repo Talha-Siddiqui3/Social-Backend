@@ -64,4 +64,8 @@ export class AppService {
       message: message,
     };
   }
+
+  authenticate(accessToken: string): boolean {
+    return this.authService.verifyRequest(accessToken);
+  }
 }

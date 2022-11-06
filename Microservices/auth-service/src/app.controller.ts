@@ -4,7 +4,7 @@ import { LoginResponseDto } from './dto/login-response.dto';
 import { LoginRequestDto } from './dto/login-request.dto';
 import { VerifyRequestDto } from './dto/verify-request.dto';
 import { VerifyResponseDto } from './dto/verify-response.dto';
-import { MessagePattern } from '@nestjs/microservices';
+import {MessagePattern, Payload} from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
@@ -24,5 +24,10 @@ export class AppController {
   @MessagePattern({ cmd: 'verify' })
   verify(@Body() data: VerifyRequestDto): Promise<VerifyResponseDto> {
     return this.appService.verify(data);
+  }
+
+  @MessagePattern({ cmd: 'authenticate' })
+  authenticate(@Payload() accessToken: string): boolean {
+    return this.appService.authenticate(accessToken);
   }
 }

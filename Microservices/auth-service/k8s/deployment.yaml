@@ -48,6 +48,8 @@ spec:
               secretKeyRef:
                 name: auth-secret
                 key: auth-jwt-secret-key
+          - name: REDIS_HOST
+            value: redis-0.redis.default.svc.cluster.local
           ports:
             - containerPort: 4000
 

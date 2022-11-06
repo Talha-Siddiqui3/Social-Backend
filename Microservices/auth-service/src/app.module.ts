@@ -22,12 +22,9 @@ import { UserModule } from './user/user.module';
     CacheModule.register({
       store: redisStore,
       isGlobal: true,
-      host: 'redis-0.redis.default.svc.cluster.local',
-      //host: 'localhost', //default host
+      host: process.env.REDIS_HOST,
       port: 6379,
-      //port: 55000,
       auth_pass: process.env.REDIS_AUTH_PASS,
-      //auth_pass: 'redispw',
     }),
     AuthModule,
     UserModule,

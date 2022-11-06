@@ -8,6 +8,7 @@ import { Conversation } from './entities/conversation.entity';
 import { User } from './entities/user.entity';
 import { UserConversation } from './entities/user-conversation.entity';
 import { ConfigModule } from '@nestjs/config';
+import {Message} from "./entities/message.entity";
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -18,10 +19,10 @@ import { ConfigModule } from '@nestjs/config';
       username: 'root',
       password: process.env.MYSQL_ROOT_PASSWORD,
       database: 'main',
-      entities: [User, Conversation, UserConversation],
+      entities: [User, Conversation, UserConversation, Message],
       synchronize: false,
     }),
-    TypeOrmModule.forFeature([User, Conversation]),
+    TypeOrmModule.forFeature([User, Conversation, UserConversation, Message]),
   ],
   controllers: [AppController, ConversationController],
   providers: [AppService, ConversationService],

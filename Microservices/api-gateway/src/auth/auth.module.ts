@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { AuthController } from './auth.controller';
+import { PassportModule } from '@nestjs/passport';
+import { CustomStrategy } from './custom-strategy.service';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot(), PassportModule.register({ defaultStrategy: 'custom' })],
   controllers: [AuthController],
   providers: [
     {
@@ -13,11 +15,12 @@ import { AuthController } from './auth.controller';
         ClientProxyFactory.create({
           transport: Transport.TCP,
           options: {
-            host: 'auth-service-internal.default.svc.cluster.local',
+            host: process.env.AUTH_SERVICE_HOST,
             port: 4000,
           },
         }),
     },
+    CustomStrategy,
   ],
 })
 export class AuthModule {}

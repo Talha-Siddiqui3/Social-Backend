@@ -9,12 +9,16 @@ import { getUserConversationsQuery } from './sql.queries/queries';
 import { UserConversationDbModel } from './models/user-conversation-db.model';
 import { UserConversationModel } from './models/user-conversation.model';
 import { UserConversationsResponseDto } from './dto/user-conversations-response.dto';
+import { Message } from '../entities/message.entity';
+import {MessagesResponseDto} from "./dto/messages-response.dto";
 
 @Injectable()
 export class ConversationService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    @InjectRepository(Message)
+    private messageRepository: Repository<Message>,
     @InjectDataSource() private readonly connection: Connection,
   ) {}
 
@@ -56,13 +60,21 @@ export class ConversationService {
         userConversations,
       );
 
-    const userConversationsModels = Object.values(userConversationIDToUserConversationMap).map(
-      (userConversationDbModels) => {
-        return new UserConversationModel(userConversationDbModels)
-      },
-    );
+    const userConversationsModels = Object.values(
+      userConversationIDToUserConversationMap,
+    ).map((userConversationDbModels) => {
+      return new UserConversationModel(userConversationDbModels);
+    });
 
     return { success: true, conversations: userConversationsModels };
+  }
+
+  async getConversationMessages(conversationID: string): Promise<MessagesResponseDto> {
+    const messages = await this.messageRepository.find({
+      where: { conversationID: conversationID },
+      order: { createdAt: 'DESC' },
+    });
+    return {success:true, messages}
   }
 
   listToMap<T>(key: string, list: T[]): { string: T[] } | {} {

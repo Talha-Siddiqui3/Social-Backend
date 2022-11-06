@@ -22,6 +22,8 @@ spec:
           env:
             - name: CHAT_SERVICE_HOST
               value: chat-service-internal.default.svc.cluster.local
+            - name: AUTH_SERVICE_HOST
+              value: auth-service-internal.default.svc.cluster.local
 
 ---
 apiVersion: v1

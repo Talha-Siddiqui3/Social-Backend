@@ -4,6 +4,7 @@ import { UserContactsRequestDto } from './dto/user-contacts-request.dto';
 import { UserContactsResponseDto } from './dto/user-contacts-response.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserConversationsResponseDto } from './dto/user-conversations-response.dto';
+import { MessagesResponseDto } from './dto/messages-response.dto';
 
 @Controller('conversations')
 export class ConversationController {
@@ -21,5 +22,12 @@ export class ConversationController {
     @Payload() userID: string,
   ): Promise<UserConversationsResponseDto> {
     return this.conversationService.getUserConversations(userID);
+  }
+
+  @MessagePattern('getConversationMessages')
+  getConversationMessages(
+    @Payload() conversationID: string,
+  ): Promise<MessagesResponseDto> {
+    return this.conversationService.getConversationMessages(conversationID);
   }
 }
